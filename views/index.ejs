@@ -14,7 +14,7 @@
             $('select').empty();
             $('select').append("<option>Select one</option>");
             for( app of data) {
-                $('select').append("<option value='"+ app.id + "'>" + app.name + "</option>");
+                $('select').append("<option value='"+ app.id + "'>" + app.name+ '[by: '+ app.author +']' + "</option>");
             }
         }});
     }
@@ -32,7 +32,7 @@
 
 </head>
 <body onload="loadApps();">
-  <p>Applications : 
+  <p>Application List : 
   <select onchange="loadDot(this)"><option>Application is loading ... Wait...</option></select>
   </p>
   <div id="visualization" height="100%" width="100%"></div>

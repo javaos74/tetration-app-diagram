@@ -1,22 +1,22 @@
 var express = require('express');
 var RestClient = require('./tetration.js');
 var credentials = require('./credentials.js')
+var prototab = require('./protocol_table.js')
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
 const tetclient = new RestClient(credentials.API_ENDPOINT, credentials.API_KEY, credentials.API_SECRET)
 var router = express.Router();
-var show_port = false;
+var show_port = true;
 
 /* GET users listing. */
 router.get('/apps', (req, res, next) => {
   tetclient.get('/applications', (error, response, body) => {
     retval = []
     body.forEach( function( item) {
-        d = { name: item.name, id: item.id}
+        d = { name: item.name, author: item.author, id: item.id}
         retval.push(d)
-        console.log( JSON.stringify(d))
+        //console.log( JSON.stringify(d))
     });
-    //console.log(JSON.stringify(body, null, 2))
     res.send( JSON.stringify(retval));
   });
 });
@@ -27,39 +27,82 @@ router.get('/apps/:appid', (req, res, next) => {
     tetclient.get('/applications/' + appid + '/details', (error, response, body) => {
         var appName = body.name
         // cluster handling 
-        for ( cluster of body.clusters) {
-            var cur_node = {}
-            var cur_ep_names = []
-            for ( node of cluster.nodes) {
-                cur_ep_names.push( node.name)
+        if ( body.hasOwnProperty('clusters') ) {
+            for ( cluster of body.clusters) {
+                var cur_node = {}
+                var cur_ep_names = []
+                for ( node of cluster.nodes) {
+                    cur_ep_names.push( node.name)
+                }
+                cur_node.id = cluster.id;
+                cur_node.label = cluster.name +":\n" + cur_ep_names.join("\n");
+                appVisData.nodes.push( cur_node)
             }
-            cur_node.id = cluster.id;
-            cur_node.label = cluster.name +":\n" + cur_ep_names.join("\n");
-            appVisData.nodes.push( cur_node)
         }
         // inventory filter handling 
-        for( inv_filter of body.inventory_filters) {
-            var cur_node = {}
-            cur_node.id = inv_filter.id;
-            cur_node.label = inv_filter.name;
-            cur_node.style = "filled";
-            cur_node.color = { background: "lightblue"}
-            appVisData.nodes.push( cur_node);
-        }
-        // policies 
-        for ( policy of body.default_policies) {
-            if (show_port) {
-
-            } else {
-                var cur_edge = { arrows: "to" }
-                cur_edge.from = policy.consumer_filter_id;
-                cur_edge.to = policy.provider_filter_id;
-                appVisData.edges.push( cur_edge);
+        if( body.hasOwnProperty( 'inventory_filters')) {
+            for( inv_filter of body.inventory_filters) {
+                var cur_node = {}
+                cur_node.id = inv_filter.id;
+                cur_node.label = inv_filter.name;
+                cur_node.style = "filled";
+                cur_node.color = { background: "lightblue"}
+                appVisData.nodes.push( cur_node);
             }
         }
-        console.log( JSON.stringify( appVisData, null, 2));
-        res.send( appVisData ); 
+        // policies 
+        if( body.hasOwnProperty('default_policies')) {
+            for ( policy of body.default_policies) {
+                if (show_port) {
+                    var policies = {}
+                    var port = "0", proto = "TCP", ports = [];
+                    for ( port_range of policy.l4_params) {
+                        if (port_range.port[0] == port_range.port[1]) { 
+                            port = String(port_range.port[0]);
+                        } else {
+                            port = String(port_range.port[0]) + "-" + String(port_range.port[1]);
+                        }
+                        //simple tcp or upd
+                        proto = prototab[ port_range.proto]
+                        /*
+                        if (port_range.proto == 17) 
+                            proto = "UDP"
+                        else if ( port_range.proto == 6)
+                            proto = "TCP"
+                        else
+                            proto = String(port_range.proto)
+                        */
+                        if ( !Array.isArray(policies[proto]) ) 
+                            policies[proto] = []
+                        policies[proto].push( port);
+                    }
+                    //console.log( JSON.stringify( policies));
+                    var cur_node = { color: { background: 'lightgray'}, style: 'filled', shape: 'box'}
+                    for ( cur_policy in policies) {
+                        ports.push( cur_policy + ":[" + policies[cur_policy]+"]")
+                    }
+                    //cur_node.label = policy.consumer_filter_name + '-->' + policy.provider_filter_name + ':\n' + ports.join('\n');
+                    cur_node.label = ports.join('\n');
+                    cur_node.id = policy.consumer_filter_id + policy.provider_filter_id
+                    appVisData.nodes.push( cur_node)
+                    //console.log( JSON.stringify( cur_node))
 
+                    var cur_edge = { arrows: "to", from: policy.consumer_filter_id, to: policy.consumer_filter_id + policy.provider_filter_id }
+                    appVisData.edges.push( cur_edge)
+                    console.log( JSON.stringify( cur_edge));
+                    var cur_edge2 = { arrows: "to", from: policy.consumer_filter_id + policy.provider_filter_id, to: policy.provider_filter_id}
+                    appVisData.edges.push( cur_edge2)
+                    console.log( JSON.stringify( cur_edge2));
+                } else {
+                    var cur_edge = { arrows: "to" }
+                    cur_edge.from = policy.consumer_filter_id;
+                    cur_edge.to = policy.provider_filter_id;
+                    appVisData.edges.push( cur_edge);
+                }
+            }
+        }
+        //console.log( JSON.stringify( appVisData, null, 2));
+        res.send( appVisData ); 
     });
 });
 
