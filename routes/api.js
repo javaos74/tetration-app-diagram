@@ -11,7 +11,7 @@ var show_port = true;
 /* GET users listing. */
 router.get('/apps', (req, res, next) => {
   tetclient.get('/applications', (error, response, body) => {
-    retval = []
+    var retval = []
     body.forEach( function( item) {
         d = { name: item.name, author: item.author, id: item.id}
         retval.push(d)
