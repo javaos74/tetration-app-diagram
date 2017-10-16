@@ -24,7 +24,7 @@ $ cd tetration-app-diagram
 $ npm start
 
 ```
-Open your brower and connect server( or localshot) with 3003 port 
+Open your brower and connect server( or localhost) with 3003 port 
 
 After selection application the you can see Application topology diagram with D3 javascript library 
 

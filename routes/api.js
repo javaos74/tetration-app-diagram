@@ -35,7 +35,10 @@ router.get('/apps/:appid', (req, res, next) => {
                     cur_ep_names.push( node.name)
                 }
                 cur_node.id = cluster.id;
-                cur_node.label = cluster.name +":\n" + cur_ep_names.join("\n");
+                //cur_node.label = cluster.name +":\n" + cur_ep_names.join("\n");
+                cur_node.title = cur_ep_names.join("\r\n"); 
+                cur_node.label = cluster.name 
+                //cur_node.shape = "star";
                 appVisData.nodes.push( cur_node)
             }
         }
@@ -46,6 +49,7 @@ router.get('/apps/:appid', (req, res, next) => {
                 cur_node.id = inv_filter.id;
                 cur_node.label = inv_filter.name;
                 cur_node.style = "filled";
+                //cur_node.shape = "box";
                 cur_node.color = { background: "lightblue"}
                 appVisData.nodes.push( cur_node);
             }
@@ -87,10 +91,10 @@ router.get('/apps/:appid', (req, res, next) => {
                     appVisData.nodes.push( cur_node)
                     //console.log( JSON.stringify( cur_node))
 
-                    var cur_edge = { arrows: "to", from: policy.consumer_filter_id, to: policy.consumer_filter_id + policy.provider_filter_id }
+                    var cur_edge = { arrows: "to", font: {size: 12}, from: policy.consumer_filter_id, to: policy.consumer_filter_id + policy.provider_filter_id }
                     appVisData.edges.push( cur_edge)
                     console.log( JSON.stringify( cur_edge));
-                    var cur_edge2 = { arrows: "to", from: policy.consumer_filter_id + policy.provider_filter_id, to: policy.provider_filter_id}
+                    var cur_edge2 = { arrows: "to", font: {size: 12}, from: policy.consumer_filter_id + policy.provider_filter_id, to: policy.provider_filter_id}
                     appVisData.edges.push( cur_edge2)
                     console.log( JSON.stringify( cur_edge2));
                 } else {
