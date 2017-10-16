@@ -4,7 +4,10 @@
   <title><%= title %></title>
   <script src="/javascripts/vis.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+  <script src="/javascripts/svgToPdf.js"></script>
   <link href="/stylesheets/vis.css" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/style.css" rel="stylesheet" type="text/css" />
 
   <script type="text/javascript">
     // ... load a visualization
@@ -56,15 +59,53 @@
             network.on("hidePopup", function (params) {
                 console.log('hidePopup Event' + + JSON.stringify(params, null,2));
             });
+            //download link activate 
+            document.getElementById("download").innerText = "Download as Image"
+            document.getElementById("download").addEventListener('click', export_image, false);
         }});
     }
+    function export_pdf() {
+        try {
+            var canvas = $('#visualization > div > canvas').get(0);
+            // you should set the format dynamically, write [width, height] instead of 'a4'
+            var pdf = new jsPDF('l', 'pt', [ canvas.width, canvas.height]);
+            canvas.getContext('2d');
+            var imgData = canvas.toDataURL("image/jpeg", 1.0);
+            //pdf.addImage(imgData, 'JPEG', 5, 5);
+            pdf.save('ApplicationDiagram.jpeg');
+        } catch(e) {
+            alert("Error description: " + e.message);
+        }
+        /*
+        svgElementToPdf(svg, pdf, {
+            scale: 72/96, // this is the ratio of px to pt units
+            removeInvalid: true // this removes elements that could not be translated to pdf from the source svg
+        });
+        pdf.save('ApplicationDiagram.pdf'); // use output() to get the jsPDF buffer
+        */
+    }
+
+    function export_image( ) {
+        var filename = prompt('Input file name(default png extenstion) ')
+        try {
+            link = document.getElementById("download");
+            var canvas = $('#visualization > div > canvas').get(0);
+            canvas.getContext('2d');
+            link.href = canvas.toDataURL();
+            link.download = filename;
+        } catch(e) {
+            alert("Error description: " + e.message);
+        }
+    }
+
   </script>
 
 </head>
 <body onload="loadApps();">
-  <p>Application List : 
-  <select onchange="loadDot(this)"><option>Application is loading ... Wait...</option></select>
-  </p>
+  <div>Application List : 
+  <select onchange="loadDot(this)"><option>Application is loading ... </option></select> 
+  <a id="download" style="cursor:pointer"></a>
+  </div>
   <div id="visualization" height="100%" width="100%"></div>
 </body>
 </html>
