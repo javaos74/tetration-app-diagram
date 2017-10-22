@@ -1,23 +1,27 @@
+
 <!DOCTYPE HTML>
 <html>
 <head>
   <title><%= title %></title>
-  <script src="/javascripts/vis.js"></script>
+  <script src="javascripts/vis.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
-  <script src="/javascripts/svgToPdf.js"></script>
-  <link href="/stylesheets/vis.css" rel="stylesheet" type="text/css" />
-  <link href="/stylesheets/style.css" rel="stylesheet" type="text/css" />
+  <script src="javascripts/svgToPdf.js"></script>
+  <link href="stylesheets/vis.css" rel="stylesheet" type="text/css">
+
+  <link href="stylesheets/style.css" rel="stylesheet" type="text/css">
+  <link href="stylesheets/frame.css" rel="stylesheet" type="text/css"/>
 
   <script type="text/javascript">
     // ... load a visualization
     function loadApps() {
         $.ajax( {url: '/api/apps', success : function (result) {
             data = JSON.parse(result);
-            $('select').empty();
-            $('select').append("<option>Select one</option>");
+            $('#applications').empty();
+            var idx = 0
             for( app of data) {
-                $('select').append("<option value='"+ app.id + "'>" + app.name+ '[by: '+ app.author +']' + "</option>");
+                $('#applications').append("<li class='application-list'><p class='text-app-list' id='app-'" + idx + "' data-app-id='" + app.id + "' >" + app.name + "[by: " + app.author +"] </p></li>");
+                idx = idx + 1;
             }
         }});
     }
@@ -98,14 +102,235 @@
         }
     }
 
+    //-framework
+
+    $(document).ready(function(){
+        $('#nav-icon1').click(function(){
+            $(this).toggleClass('open');
+        });
+        
+        $("#nav-icon1").click(function(event){
+        event.preventDefault();
+        $(".side-menu").toggleClass("menushow");   
+        });
+
+        //$("#alarm").click(function(event){
+        //event.preventDefault();
+       //$(".alarm-page-wrap").toggleClass("pageshow");   
+       // });
+
+        //$("#profile").click(function(event){
+        //event.preventDefault();
+        //$(".profile-page-wrap").toggleClass("pageshow-profile");   
+        //});
+
+        $(".side-menu-col-1").hover(function(){
+           $('.side-menu-sub').show();
+        },function(){
+            $('.side-menu-sub').hide();
+        });
+
+        $(".side-menu-sub").hover(function(){
+         $('.side-menu-sub').show();
+        },function(){
+           $('.side-menu-sub').hide();
+        });
+
+        $(".side-menu-sub").hover(function(){
+           $('.side-menu-col-1').css('background-color', '#268fd4');
+        },function(){
+            $('.side-menu-col-1').css('background-color', '');
+        });
+
+
+    });
+
+
+
   </script>
 
 </head>
 <body onload="loadApps();">
-  <div>Application List : 
-  <select onchange="loadDot(this)"><option>Application is loading ... </option></select> 
-  <a id="download" style="cursor:pointer"></a>
-  </div>
-  <div id="visualization" height="100%" width="100%"></div>
+
+    <div id="container">
+
+        <!-- top navigation -->
+        <div class="nav">
+            <div class="ham-wrap">
+                <div id="nav-icon1">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+            </div>
+            <div class="cisco-logo-wrap">
+                <div class="logo-img-wrap">
+                    <img class="logo-img" src="assets/logo-300.png" alt="">
+                </div>
+            </div>  
+            <div class="nav-button-wrap">
+                <div class="nav-button nav-button-1" id="alarm">
+                    <div class="circle-icon">
+                        <span class="icon-Asset icon-Asset-6"></span>
+                    </div>
+                </div>
+                <div class="nav-button nav-button-2">
+                    <div class="circle-icon">
+                        <span class="icon-Asset icon-Asset-10"></span>
+                    </div>
+                </div>
+                <div class="nav-button nav-button-3">
+                    <div class="circle-icon">
+                        <span class="icon-Asset icon-Asset-8"></span>
+                    </div>
+                </div>
+                <div class="nav-button nav-button-4" id="profile">
+                    <div class="circle-icon">
+                        <span class="icon-Asset icon-Asset-9"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="nav-2">
+            <div class="left-menu-wrap">
+                <div class="left-menu-col left-menu-col-1">
+                    <div class="nav-2-icon-wrap">
+                        <span class="icon-Asset-b icon-Asset-14"></span>
+                    </div>
+                </div>
+                <div class="left-menu-col left-menu-col-2">
+                    <div class="nav-2-icon-wrap">
+                        <span class="icon-Asset-b icon-Asset-15"></span>
+                    </div>
+                </div>
+                <div class="left-menu-col left-menu-col-3">
+                    <div class="nav-2-icon-wrap">
+                        <span class="icon-Asset-b icon-Asset-16"></span>
+                    </div>
+                </div>
+                <div class="left-menu-col left-menu-col-4">
+                    <div class="nav-2-icon-wrap">
+                        <span class="icon-Asset-b icon-Asset-12"></span>
+                    </div>
+                </div>
+                <div class="left-menu-col left-menu-col-5">
+                    <div class="nav-2-icon-wrap">
+                        <span class="icon-Asset-b icon-Asset-13"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="left-menu-info-wrap">
+                <div class="left-menu-info">
+                    <span class="icon-Asset icon-Asset-2"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="side-menu menushow">
+            <div class="side-menu-col-wrap">
+                <div class="side-menu-col side-menu-col-1" onclick="location.href='#';" style="cursor: pointer;">
+                    <p class="title">Application List</p>
+                </div>
+                <div class="side-menu-col side-menu-col-2">
+                    <p class="title">개 요</p>
+                </div>
+                <div class="side-menu-col side-menu-col-3">
+                    <p class="title">개 요</p>
+                </div>
+                <div class="side-menu-col side-menu-col-4">
+                    <p class="title">개 요</p>
+                </div>
+                <div class="side-menu-col side-menu-col-5">
+                    <p class="title">개 요</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="side-menu-sub">
+            <ul class="application-list-wrap" id="applications">
+
+                <li class="application-list">
+                    <p class="text-app-list" id="list-1">Number one</p>
+                </li>
+                <li class="application-list">
+                    <p class="text-app-list" id="list-2"></p>
+                </li>
+                <li class="application-list">
+                    <p class="text-app-list" id="list-3"></p>
+                </li>
+                <li class="application-list">
+                    <p class="text-app-list" id="list-4"></p>
+                </li>
+                <li class="application-list">
+                    <p class="text-app-list" id="list-5"></p>
+                </li>
+                <li class="application-list">
+                    <p class="text-app-list" id="list-6"></p>
+                </li>
+                <li class="application-list">
+                    <p class="text-app-list" id="list-7"></p>
+                </li>
+                <li class="application-list">
+                    <p class="text-app-list" id="list-8"></p>
+                </li>
+                <li class="application-list">
+                    <p class="text-app-list" id="list-9"></p>
+                </li>
+                <li class="application-list">
+                    <p class="text-app-list" id="list-10"></p>
+                </li>
+                <li class="application-list">
+                    <p class="text-app-list" id="list-11"></p>
+                </li>
+                <li class="application-list">
+                    <p class="text-app-list" id="list-12"></p>
+                </li>
+                <li class="application-list">
+                    <p class="text-app-list" id="list-13"></p>
+                </li>
+                <li class="application-list">
+                    <p class="text-app-list" id="list-14"></p>
+                </li>
+                <li class="application-list">
+                    <p class="text-app-list" id="list-15"></p>
+                </li>
+                <li class="application-list">
+                    <p class="text-app-list" id="list-16"></p>
+                </li>
+                <li class="application-list">
+                    <p class="text-app-list" id="list-17"></p>
+                </li>
+                <li class="application-list">
+                    <p class="text-app-list" id="list-18"></p>
+                </li>
+                <li class="application-list">
+                    <p class="text-app-list" id="list-19"></p>
+                </li>
+            </ul>
+        </div>
+        <!--Left Side Menu-->
+
+        <div class="alarm-page-wrap">           
+        </div>
+        <!--Alram Page-->
+
+        <div class="profile-page-wrap">         
+        </div>
+        <!--profile-page-->
+
+        <div class="download-btn-wrap">
+            <div class="download-btn">
+                <div id="download" class="download-btn-text" style="cursor:pointer"><span class="icon-Asset-42"></span></div>
+            </div>
+        </div>
+
+
+        <div class="content-wrap">
+            <div class="viz-wrap">
+                <div id="visualization" height="100%" width="100%"></div>
+            </div> 
+        </div>
+    </div>
 </body>
 </html>
