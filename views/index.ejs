@@ -72,7 +72,7 @@
     function showDiagram( event) {
         //alert(event);
         console.log( event)
-        var appid = event.srcElement.getAttribute('data-app-id')
+        var appid = event.target.getAttribute('data-app-id')
         //alert( appid);
         loadDot( appid);
         // document.getElementById("loader").style.display='none';
@@ -259,7 +259,7 @@
             <div class="tab-bar-wrap">
                 <ul class="ul-tab-bar">
                     <li class="list-tab-bar list-tab-bar-1">Detail</li>
-                    <li id="download" class="list-tab-bar list-tab-bar-left download-btn-text" style="cursor:pointer">Download</li>
+                    <a href="" id="download"><li class="list-tab-bar list-tab-bar-left download-btn-text" style="cursor:pointer">Download</li></a>
                     <li class="list-tab-bar list-tab-bar-left">Menu3</li>
                     <li class="list-tab-bar list-tab-bar-left">Menu4</li>
                 </ul>
@@ -275,6 +275,47 @@
                                 <span class="icon-Asset-4"></span>
                             </div>
                         </div>
+                    </div>
+                    <!--Title-->
+
+                    <div class="table-title-wrap">
+                        <div class="table-title">
+                            Detail
+                        </div>
+                    </div>
+
+                    <!--table-->
+                    <div class="table-wrap">
+                        <table class="detail-table">
+                             <tr class="tblresultshdr bold">
+                                    <td class=>Name</td>
+                                    <td class=>Value</td>
+                                </tr>
+                                <tr>
+                                    <td class="col1">ABC</td>
+                                    <td>GBP</td>
+                                </tr>
+                                <tr>
+                                    <td class="col1">ABC</td>
+                                    <td>GBP</td>
+                                </tr>
+                                <tr>
+                                    <td class="col1">ABC</td>
+                                    <td>GBP</td>
+                                </tr>
+                                <tr>
+                                    <td class="col1">ABC</td>
+                                    <td>GBP</td>
+                                </tr>
+                                <tr>
+                                    <td class="col1">ABC</td>
+                                    <td>GBP</td>
+                                </tr>
+                                <tr>
+                                    <td class="col1">ABC</td>
+                                    <td>GBP</td>
+                                </tr>
+                        </table>
                     </div>
                 </div>
             </div>
