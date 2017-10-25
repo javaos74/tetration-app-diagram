@@ -1,0 +1,1 @@
+{"id":"59efe39e497d4f7b86807b45","name":"tony-ws-3","app_scope_id":"597925e8755f021805d41d39","description":null,"author":"Tony Condran","primary":false,"created_at":1508893598,"version":0,"absolute_policies":[],"default_policies":[],"catch_all_action":"DENY","vrf":{"id":3,"name":"TA-PODs:VRF-TA","tenant_id":2,"tenant_name":"HW-Sensors"}}
