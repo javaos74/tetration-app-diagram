@@ -20,7 +20,10 @@
             for( app of data) {
                 $('#applications').append("<li class='application-list'><p class='text-app-list' id='app-" + idx + "' data-app-id='" + app.id + "' >" + app.name + "[by: " + app.author +"] </p></li>");
                 document.getElementById('app-'+idx).addEventListener('click', showDiagram, false);
+                document.getElementById('app-'+idx).addEventListener('click', showServerName, false);
+
                 idx = idx + 1;
+                
             }
         }});
     }
@@ -66,17 +69,29 @@
             // document.getElementById("download").innerText = "Download as Image"
             document.getElementById("download").addEventListener('click', export_image, false);
             document.getElementById("loader").style.display='none';
+            // document.getElementById("download-btn").classList.remove("list-tab-bar-nonclickable"); 
+            // document.getElementById("detail-btn").classList.remove("list-tab-bar-nonclickable");       
+            // document.getElementById("detail-move").classList.add("show-detail");  
+            document.getElementById("tab-bar-down").classList.add('drop-menu')   
         }});
     }
 
     function showDiagram( event) {
         //alert(event);
-        console.log( event)
+        // console.log( event)
         var appid = event.target.getAttribute('data-app-id')
-        //alert( appid);
+        // alert( appid);
         loadDot( appid);
+    }
+
+    function showServerName(event){
         // document.getElementById("loader").style.display='none';
-        //var el = document.getElementById('app-0')
+        // var el = document.getElementById('app-0')
+        console.log( event)
+        var appname = $(this).prop('innerText');
+        console.log(appname)
+        var serverNmae = document.getElementById("list-name-on-menu");
+        serverNmae.innerHTML=appname
     }
 
     function export_pdf() {
@@ -115,21 +130,23 @@
 
     //-framework
     
-    $(window).on('mousemove', function () {
-      $('.tab-bar-wrap').addClass('drop-menu');
-          try {
-            clearTimeout(timer);
-      } catch (e) {}
-          timer = setTimeout(function () {
-            $('.tab-bar-wrap').removeClass('drop-menu');
-          }, 800);
-    });
+    // $(window).on('mousemove', function () {
+    //   $('.tab-bar-wrap').addClass('drop-menu');
+    //       try {
+    //         clearTimeout(timer);
+    //   } catch (e) {}
+    //       timer = setTimeout(function () {
+    //         $('.tab-bar-wrap').removeClass('drop-menu');
+    //       }, 800);
+    // });
 
     $(window).on('load',function() {
         $("#loader").fadeOut("slow");
     });
 
     $(document).ready(function(){
+        $('.list-tab-bar-1').click(function(){return false;})
+
         $('#nav-icon1').click(function(){
             $(this).toggleClass('open');
         });
@@ -256,18 +273,19 @@
         </div>
 
         <div class="nav-tab-bar">
-            <div class="tab-bar-wrap">
+            <div id="tab-bar-down" class="tab-bar-wrap">
                 <ul class="ul-tab-bar">
-                    <li class="list-tab-bar list-tab-bar-1">Detail</li>
-                    <a href="" id="download"><li class="list-tab-bar list-tab-bar-left download-btn-text" style="cursor:pointer">Download</li></a>
-                    <li class="list-tab-bar list-tab-bar-left">Menu3</li>
-                    <li class="list-tab-bar list-tab-bar-left">Menu4</li>
+                    <li id="list-name-on-menu" class="list-tab-bar list-tab-bar-0"></li>
+                    <li id="detail-btn" class="list-tab-bar-left list-tab-bar-clickable list-tab-bar list-tab-bar-1">Detail</li>
+                    <a href="#" id="download"><li id="download-btn" class="list-tab-bar list-tab-bar-left download-btn-text list-tab-bar-2 list-tab-bar-clickable">Download</li></a>
+                    <li class="list-tab-bar list-tab-bar-left list-tab-bar-3 list-tab-bar-nonclickable">Menu4</li>
+                    
                 </ul>
             </div>
         </div>
 
         <div class="tab-bar-widget-wrap">
-            <div class="tab-bar-widget tab-bar-widget-1">
+            <div id="detail-move" class="tab-bar-widget tab-bar-widget-1">
                 <div class="widget-contents-wrap">
                     <div class="top-widget-btn-wrap">
                         <div class="btn-remove-bar-wrap">
