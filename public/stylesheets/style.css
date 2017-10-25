@@ -14,9 +14,12 @@ body,html {
   overflow-x:hidden;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif; 
 }
+
 body{
   background: url('../assets/logo-1280-4.png') 55% -160% no-repeat rgb(249,249,249);
   background-size: 500px; 
+  background-color: #f7f7f7;
+  bottom: 0;
 }
 
 @font-face {
@@ -110,13 +113,10 @@ body{
   color: #fff;
 }
 
-#container{	
-	width: 100%;	
-}
-
-body{
-  background-color: #f7f7f7;
-  bottom: 0;
+#container{
+	background-color: #EDE8E2;
+	width: 100%;
+	height: 100vh;
 }
 
 .nav{
@@ -540,6 +540,7 @@ body{
 }
 
 .application-list{
+    width: 100%;
     height: 50px;
     text-align: center;
     line-height: 50px;
@@ -551,7 +552,6 @@ body{
 
 .application-list:hover{
 	background-color: #268fd4;
-
 }
 
 .content-wrap{
@@ -560,11 +560,12 @@ body{
 }
 
 .viz-wrap{
-	width: 90%;
+    width: 90%;
     padding-left: 50px;
     margin-left: auto;
     margin-right: auto;
     height: 100%;
+    padding-top: 100px;
 }
 
 .download-btn-wrap{
