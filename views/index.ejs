@@ -7,9 +7,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
   <link href="stylesheets/vis.css" rel="stylesheet" type="text/css">
-
+  <link rel="shortcut icon" href="assets/favicon.ico">
   <link href="stylesheets/style.css" rel="stylesheet" type="text/css">
-  <link href="stylesheets/frame.css" rel="stylesheet" type="text/css"/>
 
   <script type="text/javascript">
     // ... load a visualization
@@ -133,6 +132,12 @@
     $(document).ready(function(){
         $('#nav-icon1').click(function(){
             $(this).toggleClass('open');
+        });
+
+        $(".left-menu-col-1").click(function(event){
+            event.preventDefault();
+            $(".side-menu").toggleClass("menushow");
+            $("#nav-icon1").toggleClass("open");
         });
         
         $("#nav-icon1").click(function(event){
