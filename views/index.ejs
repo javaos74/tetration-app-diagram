@@ -12,10 +12,10 @@
   <script type="text/javascript">
     // ... load a visualization
     function loadApps() {
-        $.ajax( {url: '/api/apps', success : function (result) {
-            data = JSON.parse(result);
-        //$.ajax( {url: '/data/all.json', success : function (result) {
-            //var data = result;
+        //$.ajax( {url: '/api/apps', success : function (result) {
+            //data = JSON.parse(result);
+        $.ajax( {url: '/data/all.json', success : function (result) {
+            var data = result;
             $('#applications').empty();
             var idx = 0
             for( app of data) {
@@ -28,8 +28,8 @@
     }
 
     function loadDot( appid) {
-        //$.ajax({url: "/api/fapps/"+ appid, success: function(result) {
-        $.ajax({url: "/api/apps/"+ appid, success: function(result) {
+        $.ajax({url: "/api/fapps/"+ appid, success: function(result) {
+        //$.ajax({url: "/api/apps/"+ appid, success: function(result) {
             var container = document.getElementById('visualization');
             var options = {
                 width: "100%",
