@@ -5,6 +5,7 @@
   <script src="javascripts/vis.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,200,300,400" rel="stylesheet">
   <link href="stylesheets/vis.css" rel="stylesheet" type="text/css">
   <link rel="shortcut icon" href="assets/favicon.ico">
   <link href="stylesheets/style.css" rel="stylesheet" type="text/css">
@@ -52,6 +53,8 @@
                 interaction:{ 
                     hover: true
                 }
+
+
             }
             var network = new vis.Network( container, result, options);
 
@@ -69,16 +72,36 @@
             document.getElementById("loader").style.display='none';
             document.getElementById("tab-bar-down").classList.add('drop-menu')   
 
+            
+
+            //Unixtimestamp convert format
+           
+            var timeString = result.detail.creation
+            var tdate = new Date(timeString*1000);
+            var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            var year = tdate.getFullYear();
+            var month = months[tdate.getMonth()];
+            var date = tdate.getDate();
+            var hour = tdate.getHours();
+            var min = tdate.getMinutes();
+            var sec = tdate.getSeconds();
+            var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+            
+            console.log(time)
+
             //fillout application detail desc 
             document.getElementById("app_detail_name").innerText = result.detail.name;
             document.getElementById("app_detail_desc").textContent = result.detail.description;
             document.getElementById("app_detail_author").textContent = result.detail.author;
             document.getElementById("app_detail_version").textContent = result.detail.version;
             document.getElementById("app_detail_primary").textContent = result.detail.primary;
-            document.getElementById("app_detail_create").textContent = result.detail.creation;
+            document.getElementById("app_detail_create").textContent = time;
+
 
         }});
+
     }
+    
 
     function showDiagram( event) {
         var appid = event.target.getAttribute('data-app-id')
@@ -225,8 +248,6 @@
         })
     });
 
-
-
   </script>
 
 </head>
@@ -277,7 +298,7 @@
                     <li id="list-name-on-menu" class="list-tab-bar list-tab-bar-0"></li>
                     <li id="detail-btn" class="list-tab-bar-left list-tab-bar-clickable list-tab-bar list-tab-bar-1">Detail</li>
                     <a href="#" id="download"><li id="download-btn" class="list-tab-bar list-tab-bar-left download-btn-text list-tab-bar-2 list-tab-bar-clickable">Download</li></a>
-                    <li class="list-tab-bar list-tab-bar-left list-tab-bar-3 list-tab-bar-nonclickable">...</li>
+                    <li class="list-tab-bar list-tab-bar-left list-tab-bar-3 list-tab-bar-nonclickable list-tab-bar-unavailable"></li>
                     
                 </ul>
             </div>
@@ -304,10 +325,10 @@
                     <!--table-->
                     <div class="table-wrap">
                         <table class="detail-table">
-                             <tr class="tblresultshdr bold">
-                                    <td class=>Propety Name</td>
+                             <!-- <tr class="tblresultshdr bold">
+                                    <td class="col1">Propety Name</td>
                                     <td class=>Value</td>
-                                </tr>
+                                </tr> -->
                                 <tr>
                                     <td class="col1">Description</td>
                                     <td id="app_detail_desc"></td>
@@ -338,27 +359,27 @@
             <div class="left-menu-wrap">
                 <div class="left-menu-col left-menu-col-1">
                     <div class="nav-2-icon-wrap">
-                        <span class="icon-Asset-b icon-Asset-14"></span>
+                        <span class="icon-Asset-b icon-Asset-9oct27"></span>
                     </div>
                 </div>
                 <div class="left-menu-col left-menu-col-2">
                     <div class="nav-2-icon-wrap">
-                        <span class="icon-Asset-b icon-Asset-15"></span>
+                        <span class="icon-Asset-b icon-Asset-15 icon-Asset-b-nonclickable"></span>
                     </div>
                 </div>
                 <div class="left-menu-col left-menu-col-3">
                     <div class="nav-2-icon-wrap">
-                        <span class="icon-Asset-b icon-Asset-16"></span>
+                        <span class="icon-Asset-b icon-Asset-16 icon-Asset-b-nonclickable"></span>
                     </div>
                 </div>
                 <div class="left-menu-col left-menu-col-4">
                     <div class="nav-2-icon-wrap">
-                        <span class="icon-Asset-b icon-Asset-12"></span>
+                        <span class="icon-Asset-b icon-Asset-12 icon-Asset-b-nonclickable"></span>
                     </div>
                 </div>
                 <div class="left-menu-col left-menu-col-5">
                     <div class="nav-2-icon-wrap">
-                        <span class="icon-Asset-b icon-Asset-13"></span>
+                        <span class="icon-Asset-b icon-Asset-13 icon-Asset-b-nonclickable"></span>
                     </div>
                 </div>
             </div>
