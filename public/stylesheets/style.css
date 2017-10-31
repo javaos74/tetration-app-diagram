@@ -18,8 +18,8 @@ body,html {
 }
 
 body{
-  background: url('../assets/logo-1280-4.png') 55% 50% no-repeat rgb(249,249,249);
-  background-size: 500px; 
+  background: url('../assets/tetration-logo-op.png') 55% 50% no-repeat rgb(249,249,249);
+  background-size: 1000px; 
   background-color: #f7f7f7;
   bottom: 0;
 }
@@ -258,7 +258,8 @@ body{
     width: 100%;
     height: 50px;
     border-bottom: 1px solid hsla(0,0%, 100% ,0.2);
-    text-align: center;  
+    text-align: center;
+    font-weight: 300;  
 }
 
 .cisco-logo-wrap{
@@ -482,8 +483,8 @@ body{
 }
 
 .icon-Asset-4{
-  font-size: .8em;
-  margin-left: 5px;
+  font-size: .6em;
+  margin-left: 20px;
 }
 
 .icon-Asset-3{
@@ -620,7 +621,7 @@ body{
     float: left;
     text-align: center;
     font-family: 'Roboto', sans-serif;
-    font-weight: 100;
+    font-weight: 300;
 }
 
 .list-tab-bar-left{
@@ -665,12 +666,12 @@ body{
 }
 
 .widget-contents-wrap{
-    width: 80%;
-    height: 90%;
+    width: 90%;
+    height: 65%;
     background-color: white;
     margin-left: auto;
     margin-right: auto;
-    border-radius: 25px;
+    border-radius: 5px;
     border: 1px solid #2196F3;
 }
 
@@ -718,13 +719,14 @@ body{
 }
 
 .table-title{
-  height: 40px;
-  line-height: 40px;
-  font-size: 1.5em;
+  height: 20px;
+  line-height: 20px;
+  font-size: 1.3em;
   text-align: center;
-  color:#2196f3;
+  color: #2196f3;
   font-family: 'Roboto', sans-serif;
   font-weight: 100;
+}
 
 }
 
@@ -755,13 +757,16 @@ table.detail-table td {
   padding: 11px; 
   border: 1px solid #0071bc;
   color: #0071bc;
-  background-color: rgba(234, 234, 234, 0.65);
+  background-color: rgba(163, 217, 249, 0.35);
   font-family: 'Roboto', sans-serif;
-  font-weight: 100;
+  font-weight: 300;
+  font-size: 1.1em;
 }
 
 table.detail-table td.col1 {
-  width: 50%;
+  width: 35%;
+  font-weight: 400;
+  font-size: 1.1em;
 }
 
 #list-name-on-menu{
@@ -771,4 +776,31 @@ table.detail-table td.col1 {
   font-family: 'Roboto', sans-serif;
   font-weight: 300;
 
+}
+
+.list-tab-bar-unavailable{
+  background-color: hsla(0, 0%, 72%, 0.7);
+}
+
+.icon-Asset-9oct27:before {
+  content: "\e917";
+  color: #fff;
+  font-size: 1.3em;
+}
+
+.icon-Asset-10oct27:before {
+  content: "\e916";
+  color: #fff;
+}
+
+.list-tab-bar-unavailable{
+  background-color: hsla(0, 0%, 72%, 0.7);
+}
+
+.table-wrap{
+  font-size: .7em;
+}
+
+.icon-Asset-b-nonclickable{
+  opacity:.3
 }
