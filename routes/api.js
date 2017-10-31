@@ -24,9 +24,15 @@ router.get('/apps', (req, res, next) => {
 
 router.get('/fapps/:appid', (req, res, next) => {
     var appid = req.params.appid;
-    var appVisData = { nodes: [], edges: [], options: {}}
+    var appVisData = { nodes: [], edges: [], options: {}, detail: {}}
     var body = JSON.parse(fs.readFileSync('public/data/'+appid+'.json', 'utf8'));
     var appName = body.name
+    appVisData.detail.name = body.name
+    appVisData.detail.description = body.description
+    appVisData.detail.author = body.author
+    appVisData.detail.primary = body.primary
+    appVisData.detail.version = body.version
+    appVisData.detail.creation = body.created_at
     // cluster handling 
     if ( body.hasOwnProperty('clusters') ) {
         for ( cluster of body.clusters) {
@@ -83,10 +89,8 @@ router.get('/fapps/:appid', (req, res, next) => {
 
                 var cur_edge = { arrows: "to", font: {size: 12}, from: policy.consumer_filter_id, to: policy.consumer_filter_id + policy.provider_filter_id }
                 appVisData.edges.push( cur_edge)
-                console.log( JSON.stringify( cur_edge));
                 var cur_edge2 = { arrows: "to", font: {size: 12}, from: policy.consumer_filter_id + policy.provider_filter_id, to: policy.provider_filter_id}
                 appVisData.edges.push( cur_edge2)
-                console.log( JSON.stringify( cur_edge2));
             } else {
                 var cur_edge = { arrows: "to" }
                 cur_edge.from = policy.consumer_filter_id;
@@ -100,9 +104,15 @@ router.get('/fapps/:appid', (req, res, next) => {
 
 router.get('/apps/:appid', (req, res, next) => {
     var appid = req.params.appid;
-    var appVisData = { nodes: [], edges: [], options: {}}
+    var appVisData = { nodes: [], edges: [], options: {}, detail: {}}
     tetclient.get('/applications/' + appid + '/details', (error, response, body) => {
         var appName = body.name
+        appVisData.detail.name = body.name
+        appVisData.detail.description = body.description
+        appVisData.detail.author = body.author
+        appVisData.detail.primary = body.primary
+        appVisData.detail.version = body.version
+        appVisData.detail.creation = body.created_at
         // cluster handling 
         if ( body.hasOwnProperty('clusters') ) {
             for ( cluster of body.clusters) {
@@ -162,10 +172,8 @@ router.get('/apps/:appid', (req, res, next) => {
 
                     var cur_edge = { arrows: "to", font: {size: 12}, from: policy.consumer_filter_id, to: policy.consumer_filter_id + policy.provider_filter_id }
                     appVisData.edges.push( cur_edge)
-                    console.log( JSON.stringify( cur_edge));
                     var cur_edge2 = { arrows: "to", font: {size: 12}, from: policy.consumer_filter_id + policy.provider_filter_id, to: policy.provider_filter_id}
                     appVisData.edges.push( cur_edge2)
-                    console.log( JSON.stringify( cur_edge2));
                 } else {
                     var cur_edge = { arrows: "to" }
                     cur_edge.from = policy.consumer_filter_id;

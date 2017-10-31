@@ -68,6 +68,15 @@
             document.getElementById("download").addEventListener('click', export_image, false);
             document.getElementById("loader").style.display='none';
             document.getElementById("tab-bar-down").classList.add('drop-menu')   
+
+            //fillout application detail desc 
+            document.getElementById("app_detail_name").innerText = result.detail.name;
+            document.getElementById("app_detail_desc").textContent = result.detail.description;
+            document.getElementById("app_detail_author").textContent = result.detail.author;
+            document.getElementById("app_detail_version").textContent = result.detail.version;
+            document.getElementById("app_detail_primary").textContent = result.detail.primary;
+            document.getElementById("app_detail_create").textContent = result.detail.creation;
+
         }});
     }
 
@@ -105,6 +114,8 @@
 
     function export_image( ) {
         var filename = prompt('Input file name(default png extenstion) ')
+        if ( !filename )
+            return;
         try {
             link = document.getElementById("download");
             var canvas = $('#visualization > div > canvas').get(0);
@@ -266,7 +277,7 @@
                     <li id="list-name-on-menu" class="list-tab-bar list-tab-bar-0"></li>
                     <li id="detail-btn" class="list-tab-bar-left list-tab-bar-clickable list-tab-bar list-tab-bar-1">Detail</li>
                     <a href="#" id="download"><li id="download-btn" class="list-tab-bar list-tab-bar-left download-btn-text list-tab-bar-2 list-tab-bar-clickable">Download</li></a>
-                    <li class="list-tab-bar list-tab-bar-left list-tab-bar-3 list-tab-bar-nonclickable">Menu4</li>
+                    <li class="list-tab-bar list-tab-bar-left list-tab-bar-3 list-tab-bar-nonclickable">...</li>
                     
                 </ul>
             </div>
@@ -285,7 +296,7 @@
                     <!--Title-->
 
                     <div class="table-title-wrap">
-                        <div class="table-title">
+                        <div id="app_detail_name" class="table-title">
                             Detail
                         </div>
                     </div>
@@ -298,28 +309,24 @@
                                     <td class=>Value</td>
                                 </tr>
                                 <tr>
-                                    <td class="col1">ABC</td>
-                                    <td>GBP</td>
+                                    <td class="col1">Description</td>
+                                    <td id="app_detail_desc"></td>
                                 </tr>
                                 <tr>
-                                    <td class="col1">ABC</td>
-                                    <td>GBP</td>
+                                    <td class="col1">Author</td>
+                                    <td id="app_detail_author"></td>
                                 </tr>
                                 <tr>
-                                    <td class="col1">ABC</td>
-                                    <td>GBP</td>
+                                    <td class="col1">Creation Time</td>
+                                    <td id="app_detail_create"></td>
                                 </tr>
                                 <tr>
-                                    <td class="col1">ABC</td>
-                                    <td>GBP</td>
+                                    <td class="col1">Version</td>
+                                    <td id="app_detail_version"></td>
                                 </tr>
                                 <tr>
-                                    <td class="col1">ABC</td>
-                                    <td>GBP</td>
-                                </tr>
-                                <tr>
-                                    <td class="col1">ABC</td>
-                                    <td>GBP</td>
+                                    <td class="col1">Primary</td>
+                                    <td id="app_detail_primary"></td>
                                 </tr>
                         </table>
                     </div>
