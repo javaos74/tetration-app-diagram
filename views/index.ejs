@@ -53,6 +53,8 @@
                 interaction:{ 
                     hover: true
                 }
+
+
             }
             var network = new vis.Network( container, result, options);
 
@@ -94,9 +96,10 @@
             document.getElementById("app_detail_version").textContent = result.detail.version;
             document.getElementById("app_detail_primary").textContent = result.detail.primary;
             document.getElementById("app_detail_create").textContent = time;
-
         }});
+
     }
+    
 
     function showDiagram( event) {
         var appid = event.target.getAttribute('data-app-id')
@@ -242,8 +245,6 @@
             })
         })
     });
-
-
 
   </script>
 
