@@ -18,8 +18,8 @@ body,html {
 }
 
 body{
-  background: url('../assets/logo-1280-4.png') 55% 50% no-repeat rgb(249,249,249);
-  background-size: 500px; 
+  background: url('../assets/tetration-logo-op.png') 55% 50% no-repeat rgb(249,249,249);
+  background-size: 1000px; 
   background-color: #f7f7f7;
   bottom: 0;
 }
