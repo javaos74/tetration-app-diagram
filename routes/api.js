@@ -156,9 +156,13 @@ router.get('/apps/:appid', (req, res, next) => {
                         policies[proto].push( port);
                     }
                     //console.log( JSON.stringify( policies));
-                    var cur_node = { color: { background: 'lightgray'}, style: 'filled', shape: 'box'}
+                    var cur_node = { color: { background: 'lightgray'}, style: 'filled', shape: 'box', font: { size: 8}}
                     for ( cur_policy in policies) {
-                        ports.push( cur_policy + ":[" + policies[cur_policy]+"]")
+                        if (policies[cur_policy].length > 3) {
+                            ports.push( cur_policy + ":[" + policies[cur_policy].slice(0,3)+"+ ]")
+                        } else {
+                            ports.push( cur_policy + ":[" + policies[cur_policy]+"]")
+                        }
                     }
                     //cur_node.label = policy.consumer_filter_name + '-->' + policy.provider_filter_name + ':\n' + ports.join('\n');
                     cur_node.label = ports.join('\n');
