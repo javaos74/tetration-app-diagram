@@ -10,6 +10,7 @@
   <link href="stylesheets/style.css" rel="stylesheet" type="text/css">
 
   <script type="text/javascript">
+    var network_type = 1;
     // ... load a visualization
     function loadApps() {
         //$.ajax( {url: '/api/apps', success : function (result) {
@@ -41,13 +42,9 @@
                         roundness: 0
                     }
                 },
-//                layout: {
-//                    hierarchical: {
-//                        direction: 'RL'
-//                    }
-//                },
                 nodes: {
-                    font: {size: 9}
+                    font: {size: 9},
+                    color: {background: 'orange', highlight: 'darkorange', hover: 'darkorange'}
                 },
                 physics: {
                     barnesHut: {
@@ -62,22 +59,28 @@
                     hover: true
                 }
             }
-            
+            //hierarchical network type 
+            if ( network_type == 2) {
+                options.layout = { hierarchical: { direction: 'RL'}}
+            }
             var network = new vis.Network( container, result, options);
 
             network.on('click', function(params) {
-                console.log('click event, getNodeAt returns: ' + JSON.stringify(params, null, 2));
+                //console.log('click event, getNodeAt returns: ' + JSON.stringify(params, null, 2));
             });
             network.on("showPopup", function (params) {
-                console.log('showPopup Event ' + JSON.stringify(params, null,2))
+                //console.log('showPopup Event ' + JSON.stringify(params, null,2))
             });
             network.on("hidePopup", function (params) {
-                console.log('hidePopup Event' + + JSON.stringify(params, null,2));
+                //console.log('hidePopup Event' + + JSON.stringify(params, null,2));
             });
             //download link activate 
             document.getElementById("download").addEventListener('click', export_image, false);
             document.getElementById("loader").style.display='none';
             document.getElementById("tab-bar-down").classList.add('drop-menu')   
+
+            //toggle menu 
+            document.getElementById("networktype").addEventListener('click', toggleNetworkType, false);
 
             //fillout application detail desc 
             document.getElementById("app_detail_name").innerText = result.detail.name;
@@ -90,6 +93,12 @@
         }});
     }
 
+    function toggleNetworkType() {
+        if ( network_type == 1)
+            network_type = 2;
+        else 
+            network_type =1;
+    }
     function showDiagram( event) {
         var appid = event.target.getAttribute('data-app-id')
         loadDot( appid);
@@ -287,7 +296,7 @@
                     <li id="list-name-on-menu" class="list-tab-bar list-tab-bar-0"></li>
                     <li id="detail-btn" class="list-tab-bar-left list-tab-bar-clickable list-tab-bar list-tab-bar-1">Detail</li>
                     <a href="#" id="download"><li id="download-btn" class="list-tab-bar list-tab-bar-left download-btn-text list-tab-bar-2 list-tab-bar-clickable">Download</li></a>
-                    <li class="list-tab-bar list-tab-bar-left list-tab-bar-3 list-tab-bar-nonclickable">...</li>
+                    <a href="#" id="networktype"><li id="toggle-btn" class="list-tab-bar list-tab-bar-left list-tab-bar-3 list-tab-bar-clickable">Toggle Diagram</li></a>
                     
                 </ul>
             </div>

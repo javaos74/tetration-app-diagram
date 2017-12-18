@@ -36,6 +36,8 @@ router.get('/fapps/:appid', (req, res, next) => {
     appVisData.detail.primary = body.primary
     appVisData.detail.version = body.version
     appVisData.detail.creation = body.created_at
+
+    //console.log( body);
     // cluster handling 
     if ( body.hasOwnProperty('clusters') ) {
         for ( cluster of body.clusters) {
@@ -45,7 +47,12 @@ router.get('/fapps/:appid', (req, res, next) => {
                 cur_ep_names.push( node.name)
             }
             cur_node.id = cluster.id;
-            cur_node.title = cur_ep_names.join("\r\n"); 
+            title = '<ul>'
+            cur_ep_names.forEach( function(s) {
+                title += '<li>' + s + '</li>';
+            });
+            title += '</ul>'
+            cur_node.title = title;
             cur_node.label = cluster.name 
             appVisData.nodes.push( cur_node)
         }
@@ -77,24 +84,32 @@ router.get('/fapps/:appid', (req, res, next) => {
                     proto = prototab[ port_range.proto]
                     if ( !Array.isArray(policies[proto]) ) 
                         policies[proto] = []
-
-                    if( excl_port[proto].indexOf( port) < 0) {
+                    
+                    if( excl_ports[proto].indexOf( port) < 0) {
                         policies[proto].push( port);
                     }
                 }
 
                 if ( edge_with_box ) {
+                    var title = '';
                     //console.log( JSON.stringify( policies));
                     var cur_node = { color: { background: 'lightgray'}, style: 'filled', shape: 'box', font: { size: 8}}
                     for ( cur_policy in policies) {
                         if (port_summary && policies[cur_policy].length > 3) {
                             ports.push( cur_policy + ":[" + policies[cur_policy].slice(0,3)+"+ ]")
+                            title += '<ul>' + '<li>' + cur_policy +':</li>'
+                            policies[cur_policy].forEach( function (s) {
+                                title += '<li>' + s + '<li>'
+                            });
+                            title += '</ul>'
                         } else {
                             ports.push( cur_policy + ":[" + policies[cur_policy]+"]")
                         }
                     }
                     //cur_node.label = policy.consumer_filter_name + '-->' + policy.provider_filter_name + ':\n' + ports.join('\n');
                     cur_node.label = ports.join('\n');
+                    if (title.length > 1 )
+                        cur_node.title = title;
                     cur_node.id = policy.consumer_filter_id + policy.provider_filter_id
                     appVisData.nodes.push( cur_node)
                     //console.log( JSON.stringify( cur_node))
