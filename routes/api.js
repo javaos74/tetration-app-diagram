@@ -122,6 +122,7 @@ router.get('/apps/:appid', (req, res, next) => {
                 cur_node.title = cur_ep_names.join("\r\n"); 
                 cur_node.label = cluster.name 
                 //cur_node.shape = "star";
+                cur_node.font = {size: 9}
                 appVisData.nodes.push( cur_node)
             }
         }
@@ -133,6 +134,7 @@ router.get('/apps/:appid', (req, res, next) => {
                 cur_node.label = inv_filter.name;
                 cur_node.style = "filled";
                 //cur_node.shape = "box";
+                cur_node.font = { size: 9}
                 cur_node.color = { background: "lightblue"}
                 appVisData.nodes.push( cur_node);
             }
