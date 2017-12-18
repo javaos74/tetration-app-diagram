@@ -36,10 +36,16 @@
                 height: "900",
                 edges: {
                     smooth: {
-                        forceDirection: "none",
-                        roundness: 1
+//                        forceDirection: "none",
+                        type: 'continuous',
+                        roundness: 0
                     }
                 },
+//                layout: {
+//                    hierarchical: {
+//                        direction: 'RL'
+//                    }
+//                },
                 physics: {
                     barnesHut: {
                         damping: 0.07,
@@ -53,6 +59,7 @@
                     hover: true
                 }
             }
+            
             var network = new vis.Network( container, result, options);
 
             network.on('click', function(params) {
