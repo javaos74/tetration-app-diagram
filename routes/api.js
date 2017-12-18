@@ -3,12 +3,14 @@ var fs = require('fs');
 var RestClient = require('./tetration.js');
 var credentials = require('./credentials.js')
 var prototab = require('./protocol_table.js')
+var excl_ports = require('./exclude_ports.js')
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
 const tetclient = new RestClient(credentials.API_ENDPOINT, credentials.API_KEY, credentials.API_SECRET)
 var router = express.Router();
 var show_port = true;
 var edge_with_box = false;
+var port_summary = true;
 
 /* GET users listing. */
 router.get('/apps', (req, res, next) => {
@@ -75,14 +77,17 @@ router.get('/fapps/:appid', (req, res, next) => {
                     proto = prototab[ port_range.proto]
                     if ( !Array.isArray(policies[proto]) ) 
                         policies[proto] = []
-                    policies[proto].push( port);
+
+                    if( excl_port[proto].indexOf( port) < 0) {
+                        policies[proto].push( port);
+                    }
                 }
 
                 if ( edge_with_box ) {
                     //console.log( JSON.stringify( policies));
                     var cur_node = { color: { background: 'lightgray'}, style: 'filled', shape: 'box', font: { size: 8}}
                     for ( cur_policy in policies) {
-                        if (policies[cur_policy].length > 3) {
+                        if (port_summary && policies[cur_policy].length > 3) {
                             ports.push( cur_policy + ":[" + policies[cur_policy].slice(0,3)+"+ ]")
                         } else {
                             ports.push( cur_policy + ":[" + policies[cur_policy]+"]")
@@ -100,7 +105,7 @@ router.get('/fapps/:appid', (req, res, next) => {
                     appVisData.edges.push( cur_edge2)
                 } else {
                     for ( cur_policy in policies) {
-                        if (policies[cur_policy].length > 3) {
+                        if (port_summary && policies[cur_policy].length > 3) {
                             ports.push( cur_policy + ":[" + policies[cur_policy].slice(0,3)+"+ ]")
                         } else {
                             ports.push( cur_policy + ":[" + policies[cur_policy]+"]")
