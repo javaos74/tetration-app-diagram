@@ -1,6 +1,7 @@
 from tetpyclient import RestClient
 import pprint
 import json
+import os
 
 API_ENDPOINT="https://ta.shinsegae.com"
 
@@ -32,10 +33,17 @@ if resp.status_code == 200 :
             appnames = {}
             appnames['id'] = str(app['id'])
             appnames['name'] = str(app['name'])
+            appnames['version'] = str(app['version'])
             apps.append( appnames)
 
 for app in apps:
     resp = restclient.get('/applications/%s/details' %(app['id']))
     if resp.status_code == 200:
+        try:
+            os.mkdir('public/data/%s' %(app['id']))
+        except:
+            pass
         with open('public/data/%s.json' %(app['id']), "w+") as outf:
             outf.write( resp.text)
+        with open('public/data/%s/%s.json' %(app['id'], app['version']), "w+") as outf2:
+            outf2.write( resp.text)
