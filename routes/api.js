@@ -53,6 +53,9 @@ router.get('/fapps/:appid', (req, res, next) => {
             });
             title += '</ul>'
             cur_node.title = title;
+            cur_node.shape ='ellipse';
+            cur_node.size = 10 + 5 * cur_ep_names.length;
+            cur_node.margin = {top: -100};
             cur_node.label = cluster.name 
             appVisData.nodes.push( cur_node)
         }
@@ -64,7 +67,8 @@ router.get('/fapps/:appid', (req, res, next) => {
             cur_node.id = inv_filter.id;
             cur_node.label = inv_filter.name;
             cur_node.style = "filled";
-            cur_node.color = { background: "lightblue"}
+            cur_node.shape = 'box';
+            cur_node.color = { background: "lightblue", hover: 'rgb(58, 133, 255)'}
             appVisData.nodes.push( cur_node);
         }
     }
@@ -91,24 +95,24 @@ router.get('/fapps/:appid', (req, res, next) => {
                 }
 
                 if ( edge_with_box ) {
-                    var title = '';
+                    var title = '<ul>';
                     //console.log( JSON.stringify( policies));
                     var cur_node = { color: { background: 'lightgray'}, style: 'filled', shape: 'box', font: { size: 8}}
                     for ( cur_policy in policies) {
                         if (port_summary && policies[cur_policy].length > 3) {
                             ports.push( cur_policy + ":[" + policies[cur_policy].slice(0,3)+"+ ]")
-                            title += '<ul>' + '<li>' + cur_policy +':</li>'
+                            title += '<li>' + cur_policy +':</li>'
                             policies[cur_policy].forEach( function (s) {
                                 title += '<li>' + s + '<li>'
                             });
-                            title += '</ul>'
                         } else {
                             ports.push( cur_policy + ":[" + policies[cur_policy]+"]")
                         }
                     }
+                    title += '</ul>'
                     //cur_node.label = policy.consumer_filter_name + '-->' + policy.provider_filter_name + ':\n' + ports.join('\n');
                     cur_node.label = ports.join('\n');
-                    if (title.length > 1 )
+                    if( title.length > 10)
                         cur_node.title = title;
                     cur_node.id = policy.consumer_filter_id + policy.provider_filter_id
                     appVisData.nodes.push( cur_node)
@@ -119,14 +123,22 @@ router.get('/fapps/:appid', (req, res, next) => {
                     var cur_edge2 = { arrows: "to", font: {size: 12}, from: policy.consumer_filter_id + policy.provider_filter_id, to: policy.provider_filter_id}
                     appVisData.edges.push( cur_edge2)
                 } else {
+                    var title = '<ul>'
                     for ( cur_policy in policies) {
                         if (port_summary && policies[cur_policy].length > 3) {
                             ports.push( cur_policy + ":[" + policies[cur_policy].slice(0,3)+"+ ]")
+                            title += '<li>' + cur_policy +':</li>'
+                            policies[cur_policy].forEach( function (s) {
+                                title += '<li>' + s + '<li>'
+                            });
                         } else {
                             ports.push( cur_policy + ":[" + policies[cur_policy]+"]")
                         }
-                    } 
+                    }
+                    title += '</ul>'
                     var cur_edge = { arrows: "to", label: ports.join('\n'), font: {align: 'top', size: 8}}
+                    if( title.length > 10)
+                        cur_edge.title = title;
                     cur_edge.from = policy.consumer_filter_id;
                     cur_edge.to = policy.provider_filter_id;
                     appVisData.edges.push( cur_edge);
@@ -139,6 +151,7 @@ router.get('/fapps/:appid', (req, res, next) => {
             }
         }
     }
+    //console.log( appVisData.nodes);
     res.send( appVisData ); 
 });
 
