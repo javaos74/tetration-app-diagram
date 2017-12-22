@@ -18,31 +18,20 @@
     var local_data = true;
     // ... load a visualization
     function loadApps() {
-        if ( local_data) {
-            $.ajax( {url: '/data/all.json', success : function (result) {
-                var data = result;
-                $('#applications').empty();
-                var idx = 0
-                for( app of data) {
-                    $('#applications').append("<li class='application-list'><p class='text-app-list' id='app-" + idx + "' data-app-id='" + app.id + "' >" + app.name + " [by: " + app.author +"] </p></li>");
-                    document.getElementById('app-'+idx).addEventListener('click', showDiagram, false);
-                    document.getElementById('app-'+idx).addEventListener('click', showServerName, false);
-                    idx = idx + 1;
-                }
-            }});
-        } else {
-            $.ajax( {url: '/api/apps', success : function (result) {
-                var data = result;
-                $('#applications').empty();
-                var idx = 0
-                for( app of data) {
-                    $('#applications').append("<li class='application-list'><p class='text-app-list' id='app-" + idx + "' data-app-id='" + app.id + "' >" + app.name + " [by: " + app.author +"] </p></li>");
-                    document.getElementById('app-'+idx).addEventListener('click', showDiagram, false);
-                    document.getElementById('app-'+idx).addEventListener('click', showServerName, false);
-                    idx = idx + 1;
-                }
-            }});
-        }
+        var apipath = '/api/apps';
+        if( local_data)
+            apipath = '/data/all.json';
+        $.ajax( {url: apipath, success : function (result) {
+            var data = result;
+            $('#applications').empty();
+            var idx = 0
+            for( app of data) {
+                $('#applications').append("<li class='application-list'><p class='text-app-list' id='app-" + idx + "' data-app-id='" + app.id + "' >" + app.name + " [by: " + app.author +"] </p></li>");
+                document.getElementById('app-'+idx).addEventListener('click', showDiagram, false);
+                document.getElementById('app-'+idx).addEventListener('click', showServerName, false);
+                idx = idx + 1;
+            }
+        }}); 
     }
 
     function loadDot( appid) {
