@@ -43,7 +43,6 @@
         else
             apipath = '/api/apps/';
         $.ajax({url: apipath + appid, success: function(result) {
-        //$.ajax({url: "/api/apps/"+ appid, success: function(result) {
             var container = document.getElementById('visualization');
             var options = {
                 width: "100%",
@@ -123,6 +122,7 @@
             document.getElementById("app_detail_primary").textContent = result.detail.primary;
             document.getElementById("app_detail_create").textContent = time;
         }});
+    }
 
     function toggleNetworkType() {
         if ( network_type == 1)
