@@ -3,7 +3,7 @@ import pprint
 import json
 import os
 
-API_ENDPOINT="https://ta.shinsegae.com"
+API_ENDPOINT="https://medusa-cpoc.cisco.com"
 
 # ``verify`` is an optional param to disable SSL server authentication.
 # By default, Tetration appliance dashboard IP uses self signed cert after

@@ -1,0 +1,1 @@
+{"id":"5a4ae89a755f022407399e61","name":"APJ Demo","app_scope_id":"5a117f5f755f022485009384","description":"High Level App Workspace - No ADM","author":"Rob Tappenden","primary":true,"created_at":1514858650,"version":0,"absolute_policies":[],"default_policies":[],"catch_all_action":"DENY","vrf":{"id":3001,"name":"APJDemo","tenant_id":3001,"tenant_name":"APJ"}}
