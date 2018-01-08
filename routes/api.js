@@ -87,8 +87,27 @@ function parseData(body) {
                     if ( !Array.isArray(policies[proto]) ) 
                         policies[proto] = []
                     // do not add port if port in exclude_ports 
-                    if( excl_ports[proto].indexOf( port) < 0) {
-                        policies[proto].push( port);
+                    if( excl_ports[proto] ) {
+                        var _exclude_found = false;
+                        if ( port.indexOf("_") > 0) {
+                            var port_range = port.split('_');
+                            excl_ports.forEach( function (s) {
+                                if( ! _exclude_found) { 
+                                    if( int(s) >= int(port_range[0]) && int(port_range[1]) <= int(s)) {
+                                        _exclude_found = true;
+                                    }
+                                }
+                            });
+                        } else {
+                            excl_ports[proto].forEach( function(s) {
+                                if( ! _exclude_found) {
+                                    if ( s == port)
+                                    _exclude_found = true;
+                                }
+                            });
+                        }
+                        if( _exclude_found == false)
+                            policies[proto].push( port);
                     }
                 }
 
