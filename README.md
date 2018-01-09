@@ -9,7 +9,7 @@ $ sudo bash nodesource_setup.sh
 $ sudo apt-get install nodejs build-essential
 
 # clone repository 
-$ git clone https://github.com/javaos74/tetration-app-diagram
+$ git clone https://github.com/CiscoKorea/tetration-app-diagram
 $ cd tetration-app-diagram 
 $ npm install 
 ```
@@ -22,14 +22,22 @@ $ sudo yum -y install nodejs
 $ sudo yum -y install gcc-c++ make (if development environment required) 
 
 # clone repository 
-$ git clone https://github.com/javaos74/tetration-app-diagram
+$ git clone https://github.com/CiscoKorea/tetration-app-diagram
 $ cd tetration-app-diagram 
 $ npm install 
 ```
 
 ## modify credentials.js 
-update routes/credentials.js with your tetration cluster & api key, api secret 
+update routes/credentials.js with your tetration cluster and api_key, api_secret 
+update api_cred.json with your tetration cluster's api_key and api_secret
+update app_dump.py with your tetration cluster's end_point information 
 
+## download app applications data from your cluster 
+```
+$ python app_dump.py 
+$ cd public/data 
+check all.json & {app_id}.json files & folders 
+```
 
 ## just run & try to use it 
 ```
