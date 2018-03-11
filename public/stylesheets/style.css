@@ -559,8 +559,8 @@ body{
 }
 
 .viz-wrap{
-    width: 90%;
-    padding-left: 50px;
+    width: 100%;
+    padding-left: 10px;
     margin-left: auto;
     margin-right: auto;
     height: 100%;
